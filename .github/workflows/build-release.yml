@@ -91,7 +91,7 @@ jobs:
         
         echo "Release created successfully!"
         echo "ID: $($response.id)"
-        echo "URL: $($response.html_url)")
+        echo "URL: $($response.html_url)"
         echo "Upload URL: $($response.upload_url)"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
