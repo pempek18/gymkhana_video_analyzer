@@ -1,0 +1,55 @@
+name: Build and Release Executable
+
+on:
+  push:
+    tags:
+      - 'v*'  # Trigger on version tags (e.g., v1.0.0, v1.1.0)
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Build executable
+      run: |
+        python build_exe.py
+        
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: GymkhanaVideoAnalyzer-Windows
+        path: dist/
+        
+    - name: Create Release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          dist/GymkhanaVideoAnalyzer-Windows.zip
+          dist/GymkhanaVideoAnalyzer.exe
+        draft: false
+        prerelease: false
+        generate_release_notes: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Upload to Release Assets
+      if: startsWith(github.ref, 'refs/tags/')
+      run: |
+        echo "Release assets uploaded successfully!"
+        echo "Executable: dist/GymkhanaVideoAnalyzer.exe"
+        echo "Package: dist/GymkhanaVideoAnalyzer-Windows.zip"
