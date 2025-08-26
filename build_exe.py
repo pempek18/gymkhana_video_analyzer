@@ -18,10 +18,10 @@ def setup_icon():
     if icon_source.exists():
         # Copy the existing ICO file to the root for PyInstaller
         shutil.copy2(icon_source, icon_dest)
-        print(f"✅ Using existing icon: {icon_source}")
+        print(f"[OK] Using existing icon: {icon_source}")
         return True
     else:
-        print("⚠️ Warning: img/pacholek.ico not found, no icon will be used")
+        print("[WARNING] Warning: img/pacholek.ico not found, no icon will be used")
         return False
 
 def install_requirements():
@@ -114,7 +114,7 @@ def main():
         print("Package location: dist/GymkhanaVideoAnalyzer-Windows.zip")
         
         if Path("icon.ico").exists():
-            print("✅ Icon included: Your pacholek.ico is now the taskbar icon!")
+            print("[OK] Icon included: Your pacholek.ico is now the taskbar icon!")
         
     except Exception as e:
         print(f"Build failed: {e}")

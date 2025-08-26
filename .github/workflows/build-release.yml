@@ -36,11 +36,11 @@ jobs:
         dir dist
         echo "Checking if executable exists:"
         if (Test-Path "dist/GymkhanaVideoAnalyzer.exe") { 
-          echo "✅ Executable found!" 
+          echo "[OK] Executable found!" 
           echo "Executable size:"
           Get-ChildItem "dist/GymkhanaVideoAnalyzer.exe" | Select-Object Name, Length
         } else { 
-          echo "❌ Executable not found!" 
+          echo "[ERROR] Executable not found!" 
           echo "Build failed or executable was not created"
           exit 1
         }
